@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Amao's Den</title>
+  <meta name="description" content="Personal website for my fursona." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./css/style.css" />
+</head>
+
+
+
+<body>
+    <!-- ================= Header ================= -->
+    <header>
+        <div class="container">
+            <nav aria-label="Primary">
+            <a class="logo" href="#top"> Amao's Den ✦</a>
+            <input type="checkbox" id="menuToggle" aria-label="Open menu" />
+            <label id="hamburger" for="menuToggle">☰</label>
+            <ul>
+                <li><a href="./index.html">Home</a></li>
+                <li><a href="./gallery.html">Gallery</a></li>
+                <li><a href="./journal.html">Journal</a></li>
+            </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ================= Gallery ================= -->
+    <section id="gallery" class="container" aria-labelledby="gallery-title">
+        <h2 id="gallery-title">Gallery</h2>
+        <div class="gallery grid">
+        <!-- Repeat figure blocks for each artwork -->
+        <figure>
+            <img src="img/gallery/1.png" alt="Artwork 1 description" />
+            <figcaption>沙漠使者</figcaption>
+        </figure>
+        <figure>
+            <img src="img/gallery/2.png" alt="Artwork 2 description" />
+            <figcaption>真拿你没办法</figcaption>
+        </figure>
+        <figure>
+            <img src="img/gallery/3.jpg" alt="Artwork 3 description" />
+            <figcaption>疾风</figcaption>
+        </figure>
+        <figure>
+            <img src="img/gallery/4.jpg" alt="Artwork 4 description" />
+            <figcaption>Ready2Go!</figcaption>
+        </figure>
+        </div>
+    </section>
+
+    <!-- ================= Footer ================= -->
+    <footer>
+    <div class="container">
+        <p>© <span id="year"></span> Amaodemao </p>
+    </div>
+    </footer>
+
+    <div id="lightbox" aria-hidden="true">
+    <figure>
+        <img src="" alt="">
+        <figcaption></figcaption>
+    </figure>
+    </div>
+    
+    <script>
+        // Set current year in footer
+        document.getElementById('year').textContent = new Date().getFullYear();
+    (function () {
+        function tagImg(img){
+            if (img.naturalWidth <= img.naturalHeight) {
+                img.classList.add('portrait');
+            } else {
+                img.classList.remove('portrait');
+            }   
+        }
+
+        document.querySelectorAll('.gallery figure img').forEach(img => {
+            if (img.complete) {
+                tagImg(img);
+            } else {
+                img.addEventListener('load', () => tagImg(img));
+            }
+        });
+    })();
+
+    (function(){
+    // ----- portrait/landscape tagging -----
+    function tagImg(img){
+        if (img.naturalWidth <= img.naturalHeight) {
+        img.classList.add('portrait');
+        } else {
+        img.classList.remove('portrait');
+        }
+    }
+    document.querySelectorAll('.gallery figure img').forEach(img=>{
+        if (img.complete) tagImg(img);
+        else img.addEventListener('load', ()=>tagImg(img));
+    });
+
+    // ----- lightbox logic -----
+    const lightbox   = document.getElementById('lightbox');
+    const lbImg      = lightbox.querySelector('img');
+    const lbCaption  = lightbox.querySelector('figcaption');
+
+    // Delegate clicks on figures
+    document.querySelector('.gallery').addEventListener('click', e=>{
+        const fig = e.target.closest('figure');
+        if(!fig) return;
+
+        const img = fig.querySelector('img');
+        const fullSrc = img.dataset.full || img.src; // put data-full on img if you have a larger file
+        lbImg.src = fullSrc;
+        lbImg.alt = img.alt || '';
+        lbCaption.textContent = fig.querySelector('figcaption')?.textContent || '';
+
+        openLightbox();
+    });
+
+    function openLightbox(){
+        lightbox.classList.add('open');
+        lightbox.setAttribute('aria-hidden','false');
+        document.body.style.overflow='hidden';   // stop background scroll
+    }
+
+    function closeLightbox(){
+        lightbox.classList.remove('open');
+        lightbox.setAttribute('aria-hidden','true');
+        document.body.style.overflow='';
+    }
+
+    // Close when clicking the gray area
+    lightbox.addEventListener('click', e=>{
+        if(e.target === lightbox) closeLightbox();
+    });
+
+    // Close on ESC
+    document.addEventListener('keyup', e=>{
+        if(e.key === 'Escape') closeLightbox();
+    });
+    })();
+    </script>
+</body>
+</html>

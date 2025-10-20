@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Amao's Den</title>
+  <meta name="description" content="Personal website for my fursona." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./css/style.css" />
+</head>
+
+<body>
+    <!-- ================= Header ================= -->
+    <header>
+        <div class="container">
+            <nav aria-label="Primary">
+            <a class="logo" href="#top"> Amao's Den ✦</a>
+            <input type="checkbox" id="menuToggle" aria-label="Open menu" />
+            <label id="hamburger" for="menuToggle">☰</label>
+            <ul>
+                <li><a href="./index.html">Home</a></li>
+                <li><a href="./gallery.html">Gallery</a></li>
+                <li><a href="./journal.html">Journal</a></li>
+            </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ================= Journal / Blog ================= -->
+    <section id="journal" class="container" aria-labelledby="journal-title">
+        <h2 id="journal-title">Journal</h2>
+        <div class="post-list">
+        <article class="post">
+            <h3>First Post Title</h3>
+            <time datetime="2025-01-01">Jan 01, 2025</time>
+            <p>Write a short snippet of the post here. Link to the full post page if you want, or keep everything here on the homepage!</p>
+        </article>
+        </div>
+    </section>
+
+  <!-- ================= Footer ================= -->
+  <footer>
+    <div class="container">
+      <p>© <span id="year"></span> Amaodemao. </p>
+    </div>
+  </footer>
+
+  <script>
+    // Set current year in footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

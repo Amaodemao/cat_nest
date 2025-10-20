@@ -1,0 +1,286 @@
+:root {
+    --bg: #fbf7e6;
+    --text: #48466b;
+    --blue: #7596be;
+    --yellow: #fbd621;
+    --peach: #fabe9c;
+    --red: #df5f46;
+    --radius: 18px;
+    --maxw: 1100px;
+    --shadow: 0 6px 18px rgba(0,0,0,.08);
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Nunito", system-ui, -apple-system, sans-serif;
+    line-height: 1.6;
+    scroll-behavior: smooth;
+}
+
+/* --- Global helpers --- */
+.container { max-width: var(--maxw); margin: 0 auto; padding: 0 1.2rem; }
+.btn {
+    display: inline-block;
+    padding: .7rem 1.2rem;
+    background: var(--blue);
+    color: var(--bg);
+    border-radius: var(--radius);
+    text-decoration: none;
+    font-weight: 700;
+    transition: transform .15s ease, box-shadow .15s ease;
+}
+.btn:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+.tag { display:inline-block; padding:.2rem .6rem; background:var(--yellow); border-radius:999px; font-size:.8rem; margin-right:.4rem; color:var(--text); }
+.flex { display:flex; gap:1.2rem; }
+.grid { display:grid; gap:1.2rem; }
+
+/* --- Header / Nav --- */
+header {
+    position: sticky; top: 0; z-index: 99;
+    background: var(--bg);
+    box-shadow: 0 0 0 1px rgba(0,0,0,.05);
+}
+nav {
+    display:flex; align-items:center; justify-content:space-between;
+    height: 64px;
+}
+nav a.logo { font-weight:900; font-size:1.2rem; text-decoration:none; color:var(--text); }
+nav ul { list-style:none; margin:0; padding:0; display:flex; gap:1rem; }
+nav li a { text-decoration:none; color:var(--text); font-weight:700; padding:.4rem .6rem; border-radius:var(--radius); }
+nav li a:hover { background: var(--peach); color: var(--text); }
+
+/* Mobile menu */
+#menuToggle { display:none; }
+#hamburger { display:none; cursor:pointer; font-size:1.6rem; }
+@media (max-width: 760px){
+    nav ul { display:none; position:absolute; top:64px; right:1.2rem; background:var(--bg); box-shadow:var(--shadow); flex-direction:column; padding:1rem; border-radius:var(--radius); }
+    #hamburger { display:block; }
+    #menuToggle:checked + #hamburger + ul { display:flex; }
+}
+
+/* --- Hero --- */
+.hero {
+    padding: 4.5rem 0 3.5rem;
+    text-align:center;
+    overflow:hidden;
+    overflow-anchor: none;
+}
+.hero h1 { font-size: clamp(2.2rem, 6vw, 4rem); margin:.2rem 0; line-height:1.1; color:var(--text); }
+.hero p { max-width: 650px; margin: .8rem auto 1.6rem; font-size:1.1rem; }
+.hero img {
+    width: 180px; height: 180px; object-fit: cover; border-radius:50%;
+    box-shadow: var(--shadow);
+    border:6px solid var(--yellow);
+    background: var(--yellow);
+    transform: translateY(40px);
+    opacity: 0;
+    /* animation: floatUp .9s ease-out .2s forwards; */
+    animation: floatUp .9s ease-out .2s forwards, floatLoop 4.5s ease-in-out 1.4s infinite;
+    will-change: transform, opacity;
+    position: relative;
+    z-index: 2;
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+}
+
+.avatar-wrap{
+    position: relative;
+    display: inline-block;
+    height: 200px; /* >= img height so layout is stable */
+}
+
+/* the oval shadow */
+.avatar-shadow{
+    position:absolute;
+    left:50%; bottom:8px;
+    width:140px; height:28px;
+    background: rgba(0,0,0,1);
+    border-radius:50%;
+    transform: translateX(-50%) scale(1);
+    opacity:.32;
+    filter: blur(4px);
+    animation: shadowIn .9s ease-out .2s backwards,
+                shadowLoop 4.5s ease-in-out 1.4s infinite;
+    will-change: transform, opacity;
+    transform-origin:center;   /* keeps the oval scaling from its middle */
+    z-index:1;                  /* stays below the img (img already has z-index:2) */
+}
+
+/* pause both the image and its shadow when hovered */
+.avatar-wrap:hover .avatar,
+.avatar-wrap:hover .avatar-shadow{
+  animation-play-state: paused;
+}
+
+/* --- Sections --- */
+section { padding: 3.5rem 0; }
+section h2 { margin: 0 0 1.6rem; font-size:2rem; position:relative; display:inline-block; }
+section h2::after {
+    content:""; position:absolute; left:0; bottom:-6px; width:60%; height:6px; background:var(--peach); border-radius:6px;
+}
+
+/* About card */
+.card {
+    background: #fffef7;
+    border: 2px solid var(--blue);
+    border-radius: var(--radius);
+    padding: 1.6rem;
+    box-shadow: var(--shadow);
+    transition: transform .25s ease, box-shadow .25s ease;
+}
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 14px 24px rgba(0,0,0,.18);
+}
+
+/* Gallery */
+.gallery { 
+    display:grid;
+    gap:1.2rem;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr)); 
+}
+.gallery figure {
+    display: flex;
+    flex-direction: column;
+    margin:0; 
+    background:#fffef7; 
+    border: 2px solid var(--peach);
+    border-radius:var(--radius); 
+    overflow:hidden; 
+    box-shadow:var(--shadow); 
+    transition: transform .25s ease, box-shadow .25s ease;
+}
+.gallery figure:hover{
+  transform: translateY(-8px);
+  box-shadow: 0 14px 24px rgba(0,0,0,.18);
+}
+
+/* Default = crop (landscape) */
+.gallery figure img{
+  width:100%;
+  height:270px;           /* <-- fixed height */
+  object-fit:cover;       /* crop */
+  object-position:center; /* adjust if you want top-left, etc. */
+  display:block;
+}
+
+/* Portrait/square images: show full image, no crop */
+.gallery figure img.portrait{
+  object-fit:contain;     /* no crop */
+  background:var(--cream);/* optional letterbox color */
+}
+
+.gallery img { 
+    width:100%; 
+    display:block; }
+.gallery figcaption { 
+    margin-top: auto;
+    padding:.6rem .8rem; 
+    font-size:.9rem; 
+    background:var(--peach); 
+    color:var(--text); 
+}
+
+/* Journal */
+.post-list { display:grid; gap:1.2rem; }
+.post { 
+    background:#fffef7; 
+    padding:1.2rem 1.4rem; 
+    border-left:6px solid var(--red); 
+    border-radius: var(--radius); 
+    box-shadow: var(--shadow); 
+    transition: transform .25s ease, box-shadow .25s ease;
+}
+.post:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 14px 24px rgba(0,0,0,.18);
+}
+.post time { font-size:.85rem; opacity:.7; }
+
+/* Footer */
+footer {
+    text-align:center; padding:2.5rem 0 3rem; font-size:.9rem; opacity:.8;
+}
+
+/* Color palette strip */
+.palette { margin-top:2rem; display:flex; flex-wrap:wrap; gap:.6rem; justify-content:center; }
+.swatch { width:110px; height:60px; border-radius:12px; box-shadow:var(--shadow); position:relative; display:flex; align-items:center; justify-content:center; font-size:.8rem; font-weight:700; color:var(--text); }
+.swatch span { background:rgba(255,255,255,.7); padding:.15rem .35rem; border-radius:6px; }
+@keyframes floatUp {
+    from { transform: translateY(40px); opacity:0; }
+    to   { transform: translateY(0); opacity:1; }
+}
+@keyframes floatLoop {
+    0%   { transform: translateY(0); }
+    50%  { transform: translateY(-12px); }
+    100% { transform: translateY(0); }
+}
+@keyframes shadowIn{
+  0%   { opacity:0; transform: translateX(-50%) scale(.7); }
+  100% { opacity:.32; transform: translateX(-50%) scale(1); }
+}
+@keyframes shadowLoop{
+  0%   { transform: translateX(-50%) scale(1);   opacity:.32; }
+  50%  { transform: translateX(-50%) scale(.8);  opacity:.22; }
+  100% { transform: translateX(-50%) scale(1);   opacity:.32; }
+}
+/* motion safety */
+@media (prefers-reduced-motion: reduce){
+  .hero img,
+  .avatar-shadow{
+    animation:none !important;
+    transform:none !important;
+    opacity:1 !important;
+  }
+}
+
+/* Lightbox overlay */
+#lightbox{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .25s ease;
+  z-index: 9999;
+  overflow: auto;                  /* lets you scroll if needed */
+}
+
+#lightbox.open{
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#lightbox figure{
+  margin:0;
+}
+
+#lightbox img{
+  width: auto;
+  height: auto;
+  max-width: calc(100dvw - 4rem);   /* 2rem padding left + right */
+  max-height: calc(100dvh - 4rem);  /* 2rem padding top + bottom */
+  object-fit: contain;             /* ALWAYS fit inside without cropping */
+  flex: 1 1 auto;
+  display:block;
+  border-radius: var(--radius);
+  box-shadow: 0 0 20px rgba(0,0,0,.4);
+}
+
+#lightbox figcaption{
+  margin-top:.6rem;
+  color:#fff;
+  text-align:center;
+  font-size:.95rem;
+  max-height: 20dvh;
+  overflow: auto;
+}
+
