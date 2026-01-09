@@ -1,0 +1,37 @@
+main {
+  view-transition-name: page;
+}
+
+::view-transition {
+  background: var(--bg);
+}
+
+::view-transition-old(page) {
+  animation: pageFadeOut .22s ease both;
+  background: var(--bg);
+  filter: none !important;
+}
+
+::view-transition-new(page) {
+  animation: pageFadeIn .32s ease both;
+  background: var(--bg);
+  filter: none !important;
+}
+
+@keyframes pageFadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pageFadeOut {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(-10px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(page),
+  ::view-transition-new(page) {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

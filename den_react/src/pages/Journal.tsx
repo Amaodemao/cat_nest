@@ -1,8 +1,8 @@
 import { posts, type Post } from "../data/posts";
-import { useNavigate } from "react-router-dom";
+import { useViewTransitionNavigate } from "../hooks/useViewTransitionNavigate";
 
 function JournalCard({ card }: { card: Post }) {
-  const navigate = useNavigate();
+  const navigate = useViewTransitionNavigate();
 
   return (
     <article 

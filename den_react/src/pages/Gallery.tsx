@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import {
     gallery as items,
     goreGallery as goreItems,
@@ -136,17 +137,21 @@ export default function Gallery() {
         </div>
 
         {/* Lightbox overlay */}
-        <div
-            id="lightbox"
-            className={lb.open ? "open" : ""}
-            aria-hidden={lb.open ? "false" : "true"}
-            onClick={onOverlayClick}
-        >
-            <figure>
-            {lb.open && <img src={lb.src} />}
-            <figcaption>{lb.caption}</figcaption>
-            </figure>
-        </div>
+        {typeof document !== "undefined" &&
+            createPortal(
+                <div
+                    id="lightbox"
+                    className={lb.open ? "open" : ""}
+                    aria-hidden={lb.open ? "false" : "true"}
+                    onClick={onOverlayClick}
+                >
+                    <figure>
+                    {lb.open && <img src={lb.src} />}
+                    <figcaption>{lb.caption}</figcaption>
+                    </figure>
+                </div>,
+                document.body
+            )}
         </section>
     );
 }
