@@ -6,7 +6,7 @@
     --peach: #fabe9c;
     --red: #df5f46;
     --radius: 18px;
-    --maxw: 1100px;
+    --maxw: 800px;
     --shadow: 0 6px 18px rgba(0,0,0,.08);
 }
 
@@ -251,6 +251,7 @@ section h2::after {
     box-shadow: 0 14px 24px rgba(0,0,0,.18);
 }
 .post time { font-size:.85rem; opacity:.7; }
+.post-tags { margin-top: .6rem; }
 
 /* Footer */
 footer {
@@ -345,21 +346,6 @@ footer {
 
 /* LaTeX 样式 */
 .katex-display { overflow-x: auto; }
-
-/* table {
-    border-spacing: 0 !important;
-    border-collapse: collapse !important;
-    border-color: inherit !important;
-    display: block !important;
-    width: max-content !important;
-    max-width: 100% !important;
-    overflow: auto !important;
-}
-tbody, td, tfoot, th, thead, tr {
-    border-color: inherit !important;
-    border-style: solid !important;
-    border-width: 2px !important;
-} */
 
 .markdown blockquote {
   border-left: 5px solid var(--blue);

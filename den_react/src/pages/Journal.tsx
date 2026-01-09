@@ -1,10 +1,5 @@
-// src/pages/Journal.tsx
 import { posts, type Post } from "../data/posts";
 import { useNavigate } from "react-router-dom";
-// import React from "react";
-// import ReactMarkdown from "react-markdown";
-// import remarkGfm from "remark-gfm";
-
 
 function JournalCard({ card }: { card: Post }) {
   const navigate = useNavigate();
@@ -19,6 +14,13 @@ function JournalCard({ card }: { card: Post }) {
       <h3>{card.title}</h3>
       <time dateTime={card.dateISO}>{card.dateText}</time>
       <p>{card.excerpt}</p>
+      {card.tags.length > 0 && (
+        <div className="post-tags">
+          {card.tags.map(tag => (
+            <span key={tag} className="tag">{tag}</span>
+          ))}
+        </div>
+      )}
     </article>
   );
 }
@@ -31,7 +33,7 @@ export default function Journal() {
       );
     } else {
       const cards = posts.map((p: Post) => (
-        <JournalCard card={p} />
+        <JournalCard key={p.slug} card={p} />
       ));
       return cards;
     };

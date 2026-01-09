@@ -6,6 +6,7 @@ import remarkMath from "remark-math";
 import rehypeRaw from "rehype-raw";
 import rehypeKatex from "rehype-katex";
 import "katex/dist/katex.min.css";
+import { parseFrontmatter } from "../utils/frontmatter";
 
 
 // 让 Vite 预先知道有哪些 .md，可以按需异步加载原始文本
@@ -32,9 +33,10 @@ export default function PostPage() {
     (async () => {
       try {
         const loader = mdModules[key] as () => Promise<string>;
-        const content = await loader();
+        const raw = await loader();
         if (mounted) {
-          setMd(content);
+          const parsed = parseFrontmatter(raw);
+          setMd(parsed.content);
           setErr(null);
         }
       } catch (e) {
