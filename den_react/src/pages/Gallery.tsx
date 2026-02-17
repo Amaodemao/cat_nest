@@ -10,6 +10,7 @@ import {
 type LightboxState = {
     open: boolean;
     src: string;
+    fallbackSrc: string;
     caption: string;
 }
 
@@ -18,6 +19,7 @@ export default function Gallery() {
         {
             open: false,
             src: "",
+            fallbackSrc: "",
             caption: ""
         }
     );
@@ -87,7 +89,8 @@ export default function Gallery() {
     const openLightbox = (it: GalleryItem) => {
         setLb({
             open: true,
-            src: it.src,
+            src: it.fullSrc,
+            fallbackSrc: it.src,
             caption: it.title ?? "",
         });
     };
@@ -127,9 +130,20 @@ export default function Gallery() {
             {visibleItems.map((it: GalleryItem, i: number) => (
             <figure key={i} onClick={() => openLightbox(it)}>
                 <img
-                src={it.src}
+                src={it.thumbSrc}
+                srcSet={`${it.thumbSrc} 640w, ${it.fullSrc} 1600w`}
+                sizes="(max-width: 768px) 46vw, (max-width: 1200px) 30vw, 240px"
+                width={240}
+                height={270}
                 onLoad={onImgLoad}
                 loading="lazy"
+                decoding="async"
+                onError={(e) => {
+                    const img = e.currentTarget;
+                    if (img.dataset.fallbackApplied === "1") return;
+                    img.dataset.fallbackApplied = "1";
+                    img.src = it.src;
+                }}
                 />
                 <figcaption>{it.title}</figcaption>
             </figure>
@@ -146,7 +160,19 @@ export default function Gallery() {
                     onClick={onOverlayClick}
                 >
                     <figure>
-                    {lb.open && <img src={lb.src} />}
+                    {lb.open && (
+                        <img
+                            src={lb.src}
+                            loading="eager"
+                            decoding="async"
+                            onError={(e) => {
+                                const img = e.currentTarget;
+                                if (img.dataset.fallbackApplied === "1") return;
+                                img.dataset.fallbackApplied = "1";
+                                img.src = lb.fallbackSrc;
+                            }}
+                        />
+                    )}
                     <figcaption>{lb.caption}</figcaption>
                     </figure>
                 </div>,

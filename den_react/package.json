@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "npm run generate:posts && vite",
     "generate:posts": "node scripts/generate-posts.mjs",
+    "optimize:images": "powershell -ExecutionPolicy Bypass -File scripts/optimize-images.ps1",
     "prebuild": "npm run generate:posts",
     "build": "tsc -b && vite build",
     "lint": "eslint .",

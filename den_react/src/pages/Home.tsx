@@ -3,7 +3,17 @@ export default function Home() {
         <>
             <section className="hero" aria-labelledby="hero-title">
                 <div className="avatar-wrap">
-                    <img className="avatar" src="img/avatar.png" alt=""/>
+                    <img
+                        className="avatar"
+                        src="/img/avatar-256.jpg"
+                        srcSet="/img/avatar-256.jpg 256w, /img/avatar-512.jpg 512w"
+                        sizes="180px"
+                        width={180}
+                        height={180}
+                        fetchPriority="high"
+                        decoding="async"
+                        alt=""
+                    />
                     <span className="avatar-shadow" aria-hidden="true"></span>
                 </div>
                 <h1 id="hero-title">Hi, I'm Amao</h1>
