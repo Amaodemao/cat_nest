@@ -3,6 +3,7 @@ import { useLocation, useNavigationType, useOutlet } from "react-router-dom";
 import Header from "./components/Header.tsx"
 import Footer from "./components/Footer.tsx"
 import { runViewTransition } from "./hooks/useViewTransitionNavigate";
+import { preloadNonCriticalRoutes } from "./routes/lazyPages";
 
 export default function App() {
   const outlet = useOutlet();
@@ -29,6 +30,16 @@ export default function App() {
   useEffect(() => {
     setLastStableOutlet(currentOutlet);
   }, [location.key]);
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => {
+      void preloadNonCriticalRoutes();
+    }, 250);
+
+    return () => {
+      window.clearTimeout(timer);
+    };
+  }, []);
 
   return (
     <>

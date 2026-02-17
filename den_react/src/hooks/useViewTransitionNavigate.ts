@@ -1,5 +1,6 @@
 import { flushSync } from "react-dom";
 import { useNavigate, type NavigateOptions, type To } from "react-router-dom";
+import { preloadRouteModule } from "../routes/lazyPages";
 
 type DocumentWithViewTransition = Document & {
   startViewTransition?: (callback: () => void) => void;
@@ -25,7 +26,13 @@ export function runViewTransition(callback: () => void) {
 export function useViewTransitionNavigate() {
   const navigate = useNavigate();
 
-  return (to: To, options?: NavigateOptions) => {
+  return async (to: To, options?: NavigateOptions) => {
+    try {
+      await preloadRouteModule(to);
+    } catch {
+      // Ignore preload failures and keep navigation available.
+    }
+
     runViewTransition(() => {
       navigate(to, options);
     });

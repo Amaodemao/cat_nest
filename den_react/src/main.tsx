@@ -4,11 +4,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import App from "./App.tsx"
 import "./styles/style.css"
 import "./styles/view-transitions.css"
-
-const Home = React.lazy(() => import("./pages/Home"));
-const Gallery = React.lazy(() => import("./pages/Gallery"));
-const Journal = React.lazy(() => import("./pages/Journal"));
-const PostPage = React.lazy(() => import("./pages/JournalPage"));
+import { Gallery, Home, Journal, PostPage } from "./routes/lazyPages";
 
 const router = createBrowserRouter([
   {

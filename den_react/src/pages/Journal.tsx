@@ -8,8 +8,8 @@ function JournalCard({ card }: { card: Post }) {
     <article 
       className="post" 
       key={card.slug} 
-      onClick={() => navigate(`/journal/contents/${card.slug}`)}
-      onKeyDown={(e) => {(e.key === "Enter" || e.key === " ") && navigate(`/journal/contents/${card.slug}`)}}
+      onClick={() => void navigate(`/journal/contents/${card.slug}`)}
+      onKeyDown={(e) => {(e.key === "Enter" || e.key === " ") && void navigate(`/journal/contents/${card.slug}`)}}
     >
       <h3>{card.title}</h3>
       <time dateTime={card.dateISO}>{card.dateText}</time>

@@ -31,7 +31,7 @@ export default function ViewTransitionNavLink(props: NavLinkProps) {
     }
 
     event.preventDefault();
-    navigate(to, { replace, state, preventScrollReset, relative });
+    void navigate(to, { replace, state, preventScrollReset, relative });
   };
 
   return (
