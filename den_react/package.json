@@ -4,10 +4,11 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "npm run generate:posts && vite",
+    "predev": "npm run optimize:images && npm run generate:posts",
+    "dev": "vite",
     "generate:posts": "node scripts/generate-posts.mjs",
     "optimize:images": "powershell -ExecutionPolicy Bypass -File scripts/optimize-images.ps1",
-    "prebuild": "npm run generate:posts",
+    "prebuild": "npm run optimize:images && npm run generate:posts",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
