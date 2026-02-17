@@ -1,81 +1,14 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Amao's Den</title>
-  <meta name="description" content="Personal website for my fursona." />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./css/style.css" />
-</head>
-
-<body>
-  <!-- ================= Header ================= -->
-  <header>
-    <div class="container">
-      <nav aria-label="Primary">
-        <a class="logo" href="#top"> Amao's Den ✦</a>
-        <input type="checkbox" id="menuToggle" aria-label="Open menu" />
-        <label id="hamburger" for="menuToggle">☰</label>
-        <ul>
-          <li><a href="./index.html">Home</a></li>
-          <li><a href="./gallery.html">Gallery</a></li>
-          <li><a href="./journal.html">Journal</a></li>
-        </ul>
-      </nav>
-    </div>
-  </header>
-
-  <!-- ================= Hero ================= -->
-  <main id="top">
-    <section class="hero" aria-labelledby="hero-title">
-      <div class="avatar-wrap">
-        <img class="avatar" src="img/avatar.png" alt=""/>
-        <span class="avatar-shadow" aria-hidden="true"></span>
-      </div>
-      <h1 id="hero-title">Hi, I'm Amao</h1>
-      <p>你好，我是阿猫</p>
-
-      <div class="palette" aria-label="site color palette">
-        <div class="swatch" style="background:var(--bg)"><span>#fbf7e6</span></div>
-        <div class="swatch" style="background:var(--text); color:#fff"><span>#48466b</span></div>
-        <div class="swatch" style="background:var(--blue)"><span>#7596be</span></div>
-        <div class="swatch" style="background:var(--yellow)"><span>#fbd621</span></div>
-        <div class="swatch" style="background:var(--peach)"><span>#fabe9c</span></div>
-        <div class="swatch" style="background:var(--red); color:#fff"><span>#df5f46</span></div>
-      </div>
-    </section>
-
-    <!-- ================= About ================= -->
-    <section id="about" class="container" aria-labelledby="about-title">
-      <h2 id="about-title">About Me</h2>
-      <div class="card">
-        <p>我叫<strong>阿猫的猫</strong>，叫我阿猫就可以。<br>
-           是的，我的物种是猫，请不要再把我画成狗了。 <br>
-           
-        </p>
-        <p>很高兴认识你！</p>
-        <div class="flex" style="flex-wrap:wrap; margin-top:1rem;">
-          <span class="tag" style="background:var(--blue); color:var(--bg);">researching</span>
-          <span class="tag" style="background:var(--yellow);">eating</span>
-          <span class="tag" style="background:var(--peach);">traveling</span>
-          <span class="tag" style="background:var(--red); color:#fff;">sleeping</span>
-        </div>
-      </div>
-    </section>
-
-  <!-- ================= Footer ================= -->
-  <footer>
-    <div class="container">
-      <p>© <span id="year"></span> Amaodemao </p>
-    </div>
-  </footer>
-
-  <script>
-    // Set current year in footer
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="/img/avatar.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Amao's Den</title>
+    <script type="module" crossorigin src="/assets/index-BAogE4eO.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-gSYu9ms8.css">
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
 </html>
