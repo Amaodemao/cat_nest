@@ -1,4 +1,4 @@
-import { posts, type Post } from "../data/posts";
+import { posts, type Post } from "../data/generatedPosts";
 import { useViewTransitionNavigate } from "../hooks/useViewTransitionNavigate";
 
 function JournalCard({ card }: { card: Post }) {
