@@ -29,6 +29,7 @@ export default function Gallery() {
     const gridRef = useRef<HTMLDivElement | null>(null);
     const transitionTimers = useRef<number[]>([]);
     const visibleItems = showNsfw ? (showGore ? goreItems : nsfwItems) : items;
+    const galleryModeKey = showNsfw ? (showGore ? "gore" : "nsfw") : "safe";
 
     const onImgLoad: React.ReactEventHandler<HTMLImageElement> = (e) => {
         const img = e.currentTarget;
@@ -47,7 +48,7 @@ export default function Gallery() {
         };
         document.addEventListener("keyup", onKey);
         return () => document.removeEventListener("keyup", onKey);
-    }, []);
+    }, [lb.open]);
 
     useEffect(() => {
         if (!showNsfw && showGore) {
@@ -124,11 +125,12 @@ export default function Gallery() {
             </div>
         </div>
         <div
+            key={galleryModeKey}
             className={`gallery grid ${transitionPhase !== "idle" ? "is-transitioning" : ""} is-${transitionPhase}`}
             ref={gridRef}
         >
-            {visibleItems.map((it: GalleryItem, i: number) => (
-            <figure key={i} onClick={() => openLightbox(it)}>
+            {visibleItems.map((it: GalleryItem) => (
+            <figure key={it.src} onClick={() => openLightbox(it)}>
                 <img
                 src={it.thumbSrc}
                 srcSet={`${it.thumbSrc} 640w, ${it.fullSrc} 1600w`}

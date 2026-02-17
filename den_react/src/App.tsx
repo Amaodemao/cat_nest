@@ -29,7 +29,7 @@ export default function App() {
 
   useEffect(() => {
     setLastStableOutlet(currentOutlet);
-  }, [location.key]);
+  }, [location.key, currentOutlet]);
 
   useEffect(() => {
     const timer = window.setTimeout(() => {
