@@ -2,12 +2,15 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getPayload } from 'payload'
+import { cache } from 'react'
 
 import { CommentForm } from '@/components/CommentForm'
 import { MarkdownContent } from '@/components/MarkdownContent'
 import config from '@/payload.config'
 
-async function getPost(slug: string) {
+export const revalidate = 300
+
+const getPost = cache(async (slug: string) => {
   const payload = await getPayload({ config })
   const result = await payload.find({
     collection: 'posts',
@@ -16,6 +19,17 @@ async function getPost(slug: string) {
     where: { and: [{ slug: { equals: slug } }, { _status: { equals: 'published' } }] },
   })
   return result.docs[0] ?? null
+})
+
+export async function generateStaticParams() {
+  const payload = await getPayload({ config })
+  const posts = await payload.find({
+    collection: 'posts',
+    depth: 0,
+    limit: 1000,
+    where: { _status: { equals: 'published' } },
+  })
+  return posts.docs.map(({ slug }) => ({ slug }))
 }
 
 export async function generateMetadata({
@@ -26,7 +40,19 @@ export async function generateMetadata({
   const { slug } = await params
   const post = await getPost(slug)
   return post
-    ? { title: post.title, description: post.excerpt || undefined }
+    ? {
+        title: post.title,
+        description: post.excerpt || undefined,
+        alternates: { canonical: `/journal/${post.slug}` },
+        openGraph: {
+          type: 'article',
+          title: post.title,
+          description: post.excerpt || undefined,
+          url: `/journal/${post.slug}`,
+          publishedTime: post.publishedAt || undefined,
+          tags: post.tags?.map(({ tag }) => tag),
+        },
+      }
     : { title: 'Post not found' }
 }
 

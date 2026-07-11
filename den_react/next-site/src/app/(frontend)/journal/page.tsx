@@ -4,8 +4,17 @@ import { getPayload } from 'payload'
 
 import config from '@/payload.config'
 
-export const metadata: Metadata = { title: 'Journal' }
-export const dynamic = 'force-dynamic'
+export const metadata: Metadata = {
+  title: 'Journal',
+  description: "Notes and articles from Amao's Den.",
+  alternates: { canonical: '/journal' },
+  openGraph: {
+    title: 'Journal',
+    description: "Notes and articles from Amao's Den.",
+    url: '/journal',
+  },
+}
+export const revalidate = 300
 
 function formatDate(value: string) {
   const date = new Date(value)

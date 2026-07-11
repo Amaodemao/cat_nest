@@ -1,0 +1,21 @@
+[Unit]
+Description=Amao's Den Next.js and Payload service
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=amao
+Group=amao
+WorkingDirectory=/srv/amao-den/app/den_react/next-site
+EnvironmentFile=/srv/amao-den/shared/.env.production
+Environment=NODE_ENV=production
+Environment=PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+ExecStart=/usr/bin/env pnpm start -- --hostname 127.0.0.1 --port 3000
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=30
+UMask=0027
+
+[Install]
+WantedBy=multi-user.target

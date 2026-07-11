@@ -12,11 +12,19 @@ test.describe('Frontend', () => {
   })
 
   test('shows migrated journal and gallery', async ({ page }) => {
+    const browserErrors: string[] = []
+    page.on('console', (message) => {
+      if (message.type() === 'error') browserErrors.push(message.text())
+    })
+
     await page.goto('http://localhost:3000/journal')
     await expect(page.getByRole('link', { name: /Markdown Test/ })).toBeVisible()
 
     await page.goto('http://localhost:3000/gallery')
     await expect(page.getByRole('heading', { name: 'Gallery' })).toBeVisible()
     await expect(page.getByRole('button', { name: 'NSFW' })).toBeVisible()
+    expect(browserErrors).not.toEqual(
+      expect.arrayContaining([expect.stringContaining('Hydration failed')]),
+    )
   })
 })

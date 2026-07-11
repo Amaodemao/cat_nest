@@ -1,6 +1,7 @@
 import type { CollectionConfig } from 'payload'
 
 import { isAdmin } from '../access/isAdmin'
+import { revalidateJournal } from '../lib/revalidateContent'
 
 export const Posts: CollectionConfig = {
   slug: 'posts',
@@ -32,6 +33,14 @@ export const Posts: CollectionConfig = {
     { name: 'publishedAt', type: 'date', index: true },
   ],
   hooks: {
+    afterChange: [({ doc, previousDoc, req }) => {
+      if (!req.context.skipRevalidation) revalidateJournal(doc.slug, previousDoc?.slug)
+      return doc
+    }],
+    afterDelete: [({ doc, req }) => {
+      if (!req.context.skipRevalidation) revalidateJournal(doc.slug)
+      return doc
+    }],
     beforeChange: [
       ({ data }) => {
         if (data?._status === 'published' && !data.publishedAt) {
@@ -46,4 +55,3 @@ export const Posts: CollectionConfig = {
     maxPerDoc: 20,
   },
 }
-

@@ -1,7 +1,7 @@
 'use client'
 
 import { createPortal } from 'react-dom'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, useSyncExternalStore } from 'react'
 
 export type GalleryViewItem = {
   id: number
@@ -20,6 +20,11 @@ type LightboxState = {
 }
 
 export function GalleryClient({ items }: { items: GalleryViewItem[] }) {
+  const mounted = useSyncExternalStore(
+    () => () => undefined,
+    () => true,
+    () => false,
+  )
   const [lightbox, setLightbox] = useState<LightboxState>({
     open: false,
     src: '',
@@ -134,7 +139,7 @@ export function GalleryClient({ items }: { items: GalleryViewItem[] }) {
           </figure>
         ))}
       </div>
-      {typeof document !== 'undefined' &&
+      {mounted &&
         createPortal(
           <div
             aria-hidden={!lightbox.open}

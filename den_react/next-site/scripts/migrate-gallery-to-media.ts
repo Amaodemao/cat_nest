@@ -31,6 +31,7 @@ for (const item of galleryItems.docs) {
 
   await payload.update({
     collection: 'media',
+    context: { skipRevalidation: true },
     id: mediaID,
     data: {
       title: item.title,
@@ -49,6 +50,7 @@ for (const media of allMedia.docs) {
   const fallback = media.alt || media.filename?.replace(/\.[^/.]+$/, '').replace(/[-_]+/g, ' ') || 'Untitled image'
   await payload.update({
     collection: 'media',
+    context: { skipRevalidation: true },
     id: media.id,
     data: { title: fallback, category: media.category || 'safe', published: media.published ?? false },
   })

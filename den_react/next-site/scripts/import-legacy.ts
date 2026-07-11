@@ -50,6 +50,7 @@ async function importPosts() {
     const published = data.published !== false
     await payload.create({
       collection: 'posts',
+      context: { skipRevalidation: true },
       draft: !published,
       data: {
         title: typeof data.title === 'string' && data.title.trim() ? data.title.trim() : slug,
@@ -93,6 +94,7 @@ async function importGallery() {
     }
     await payload.create({
       collection: 'media',
+      context: { skipRevalidation: true },
       data: { title, alt: title, category, published: true, sortOrder: created },
       filePath: file,
     })

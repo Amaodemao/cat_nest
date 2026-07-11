@@ -1,6 +1,9 @@
+import path from 'node:path'
+
 import type { CollectionConfig } from 'payload'
 
 import { isAdmin } from '../access/isAdmin'
+import { revalidateGallery } from '../lib/revalidateContent'
 
 export const Media: CollectionConfig = {
   slug: 'media',
@@ -56,6 +59,14 @@ export const Media: CollectionConfig = {
     },
   ],
   hooks: {
+    afterChange: [({ doc, req }) => {
+      if (!req.context.skipRevalidation) revalidateGallery()
+      return doc
+    }],
+    afterDelete: [({ doc, req }) => {
+      if (!req.context.skipRevalidation) revalidateGallery()
+      return doc
+    }],
     beforeValidate: [
       ({ data, req }) => {
         const uploadedName = req.file?.name?.replace(/\.[^/.]+$/, '').replace(/[-_]+/g, ' ')
@@ -65,6 +76,7 @@ export const Media: CollectionConfig = {
     ],
   },
   upload: {
+    staticDir: path.resolve(process.env.MEDIA_DIR || 'media'),
     imageSizes: [
       { name: 'thumb', width: 640, height: 640, fit: 'inside', withoutEnlargement: true },
       { name: 'display', width: 1600, height: 1600, fit: 'inside', withoutEnlargement: true },

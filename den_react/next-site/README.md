@@ -55,8 +55,18 @@ COMMENT_HASH_SECRET=
 
 多实例生产部署应把内存限流替换成 Redis 或网关限流。
 
+## 页面缓存与 SEO
+
+公开文章、Journal 和 Gallery 最长缓存 5 分钟；在 Payload 后台修改文章、媒体或评论状态时会立即刷新对应页面。站点同时提供 `/sitemap.xml` 和 `/robots.txt`。
+
+生产环境必须把公开域名写入：
+
+```dotenv
+NEXT_PUBLIC_SITE_URL=https://example.com
+```
+
 ## 数据与部署
 
-开发环境使用被 Git 忽略的 SQLite 文件 `payload.db`，上传文件位于被忽略的 `media/`。上线前应切换 PostgreSQL，并将媒体迁移到持久卷或 S3 兼容对象存储。
+开发环境使用被 Git 忽略的 SQLite 文件 `payload.db`，上传文件位于被忽略的 `media/`。`DATABASE_URL` 和 `MEDIA_DIR` 可以在生产环境指向代码目录之外的持久路径。
 
-生产环境不要提交 `.env`、数据库文件或媒体文件。数据库结构变化后需要生成并执行 Payload migrations。
+`amao.hnbai.com` 采用日本 VPS、Nginx、systemd、本地 SQLite 和本地媒体目录的部署步骤见 [deploy/README.md](deploy/README.md)。生产环境不要提交 `.env`、数据库文件或媒体文件。数据库结构变化后需要生成并执行 Payload migrations。

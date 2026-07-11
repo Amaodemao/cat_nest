@@ -1,20 +1,22 @@
-import { test, expect, Page } from '@playwright/test'
+import { test, expect, type BrowserContext, type Page } from '@playwright/test'
 import { login } from '../helpers/login'
 import { seedTestUser, cleanupTestUser, testUser } from '../helpers/seedUser'
 
 test.describe('Admin Panel', () => {
   let page: Page
+  let context: BrowserContext
 
   test.beforeAll(async ({ browser }) => {
     await seedTestUser()
 
-    const context = await browser.newContext()
+    context = await browser.newContext()
     page = await context.newPage()
 
     await login({ page, user: testUser })
   })
 
   test.afterAll(async () => {
+    await context.close()
     await cleanupTestUser()
   })
 

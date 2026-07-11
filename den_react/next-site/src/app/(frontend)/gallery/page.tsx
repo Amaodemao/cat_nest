@@ -5,8 +5,17 @@ import { GalleryClient, type GalleryViewItem } from '@/components/GalleryClient'
 import type { Media } from '@/payload-types'
 import config from '@/payload.config'
 
-export const metadata: Metadata = { title: 'Gallery' }
-export const dynamic = 'force-dynamic'
+export const metadata: Metadata = {
+  title: 'Gallery',
+  description: "Amao's illustration and photography gallery.",
+  alternates: { canonical: '/gallery' },
+  openGraph: {
+    title: 'Gallery',
+    description: "Amao's illustration and photography gallery.",
+    url: '/gallery',
+  },
+}
+export const revalidate = 300
 
 function mediaURL(media: Media, size: 'thumb' | 'display') {
   return media.sizes?.[size]?.url || media.url || ''

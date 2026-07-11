@@ -553,6 +553,48 @@ body.lightbox-open {
   left: -10000px;
   position: absolute;
 }
+.sr-only {
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+.route-loading {
+  min-height: 55vh;
+  padding-top: 3.5rem;
+}
+.loading-heading,
+.loading-row,
+.loading-grid > div {
+  animation: loadingPulse 1.2s ease-in-out infinite alternate;
+  background: #ebe6d7;
+  border-radius: 8px;
+}
+.loading-heading {
+  height: 2.5rem;
+  margin-bottom: 2rem;
+  width: 11rem;
+}
+.loading-row {
+  height: 1rem;
+  margin-bottom: 0.8rem;
+  max-width: 34rem;
+}
+.loading-row-short {
+  width: 65%;
+}
+.loading-grid {
+  display: grid;
+  gap: 1.2rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+  margin-top: 2rem;
+}
+.loading-grid > div {
+  aspect-ratio: 4 / 3;
+}
 
 @keyframes floatUp {
   from {
@@ -592,6 +634,14 @@ body.lightbox-open {
   to {
     opacity: 0.32;
     transform: translateX(-50%) scale(1);
+  }
+}
+@keyframes loadingPulse {
+  from {
+    opacity: 0.55;
+  }
+  to {
+    opacity: 1;
   }
 }
 @keyframes galleryFadeOut {

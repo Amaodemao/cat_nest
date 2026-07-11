@@ -1,6 +1,7 @@
 import type { CollectionConfig } from 'payload'
 
 import { isAdmin } from '../access/isAdmin'
+import { revalidateCommentPost } from '../lib/revalidateContent'
 
 export const Comments: CollectionConfig = {
   slug: 'comments',
@@ -32,6 +33,15 @@ export const Comments: CollectionConfig = {
     },
     { name: 'ipHash', type: 'text', admin: { hidden: true } },
   ],
+  hooks: {
+    afterChange: [async ({ doc, req }) => {
+      if (!req.context.skipRevalidation) await revalidateCommentPost(doc.post, req.payload)
+      return doc
+    }],
+    afterDelete: [async ({ doc, req }) => {
+      if (!req.context.skipRevalidation) await revalidateCommentPost(doc.post, req.payload)
+      return doc
+    }],
+  },
   timestamps: true,
 }
-
