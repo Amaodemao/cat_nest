@@ -6,6 +6,7 @@ import { cache } from 'react'
 
 import { CommentForm } from '@/components/CommentForm'
 import { MarkdownContent } from '@/components/MarkdownContent'
+import { decodeRouteParam } from '@/lib/decodeRouteParam'
 import config from '@/payload.config'
 
 export const revalidate = 300
@@ -37,7 +38,8 @@ export async function generateMetadata({
 }: {
   params: Promise<{ slug: string }>
 }): Promise<Metadata> {
-  const { slug } = await params
+  const { slug: encodedSlug } = await params
+  const slug = decodeRouteParam(encodedSlug)
   const post = await getPost(slug)
   return post
     ? {
@@ -57,7 +59,8 @@ export async function generateMetadata({
 }
 
 export default async function PostPage({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params
+  const { slug: encodedSlug } = await params
+  const slug = decodeRouteParam(encodedSlug)
   const post = await getPost(slug)
   if (!post) notFound()
 
