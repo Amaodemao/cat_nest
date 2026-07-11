@@ -20,6 +20,7 @@ describe('content revalidation', () => {
     expect(revalidatePath.mock.calls).toEqual([
       ['/gallery'],
       ['/journal'],
+      ['/journal/[slug]', 'page'],
       ['/sitemap.xml'],
       ['/journal/new-slug'],
       ['/journal/old-slug'],

@@ -9,6 +9,7 @@ export function revalidateGallery() {
 
 export function revalidateJournal(...slugs: Array<string | null | undefined>) {
   revalidatePath('/journal')
+  revalidatePath('/journal/[slug]', 'page')
   revalidatePath('/sitemap.xml')
   for (const slug of new Set(slugs.filter((value): value is string => Boolean(value)))) {
     revalidatePath(`/journal/${slug}`)
