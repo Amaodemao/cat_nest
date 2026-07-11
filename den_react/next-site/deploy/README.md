@@ -14,7 +14,36 @@
     └── media/              Payload 上传文件及生成尺寸
 ```
 
-以下命令假设服务用户为 `amao`，Node.js 22、Git、Nginx、curl 和 pnpm/Corepack 已安装。
+以下命令假设服务用户为 `amao`，Git、Nginx 和 curl 已安装。
+
+## 0. Debian 12 安装系统级 Node.js 和 pnpm
+
+不要把 Node.js 安装在 root 的 NVM 目录中，否则 `amao` 和 systemd 无法使用。下面安装 Node.js 官方 `v22.23.1` Linux x64 二进制，并校验 SHA-256：
+
+```bash
+apt update
+apt install -y ca-certificates curl xz-utils
+
+NODE_VERSION=v22.23.1
+NODE_ARCH=linux-x64
+cd /tmp
+curl -fsSLO "https://nodejs.org/dist/${NODE_VERSION}/node-${NODE_VERSION}-${NODE_ARCH}.tar.xz"
+curl -fsSLO "https://nodejs.org/dist/${NODE_VERSION}/SHASUMS256.txt"
+grep " node-${NODE_VERSION}-${NODE_ARCH}.tar.xz$" SHASUMS256.txt | sha256sum -c -
+
+install -d /opt/nodejs
+tar -xJf "node-${NODE_VERSION}-${NODE_ARCH}.tar.xz"
+mv "node-${NODE_VERSION}-${NODE_ARCH}" /opt/nodejs/
+ln -sfn "/opt/nodejs/node-${NODE_VERSION}-${NODE_ARCH}" /opt/nodejs/current
+ln -sfn /opt/nodejs/current/bin/node /usr/local/bin/node
+ln -sfn /opt/nodejs/current/bin/npm /usr/local/bin/npm
+ln -sfn /opt/nodejs/current/bin/npx /usr/local/bin/npx
+
+npm install --global --prefix /usr/local pnpm@11.7.0
+node --version
+npm --version
+pnpm --version
+```
 
 ## 1. 创建目录并克隆代码
 
@@ -23,13 +52,14 @@ sudo useradd --system --create-home --shell /bin/bash amao
 sudo mkdir -p /srv/amao-den/app /srv/amao-den/shared/data /srv/amao-den/shared/media
 sudo chown -R amao:amao /srv/amao-den
 
+sudo -u amao -H node --version
+sudo -u amao -H npm --version
+sudo -u amao -H pnpm --version
+
 sudo -u amao git clone https://github.com/Amaodemao/cat_nest.git /srv/amao-den/app
 cd /srv/amao-den/app/den_react/next-site
-sudo -u amao corepack enable
 sudo -u amao pnpm install --frozen-lockfile
 ```
-
-如果 `corepack enable` 不能写入系统 Node.js 目录，先以 root 执行一次 `corepack enable`，再以 `amao` 用户安装依赖。
 
 ## 2. 配置生产环境
 
