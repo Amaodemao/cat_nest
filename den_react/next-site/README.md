@@ -1,6 +1,6 @@
 # Amao's Den — Next.js + Payload
 
-这是原 Vite 个人站的并行迁移版本。旧站仍位于仓库根目录；新站提供 Payload 管理后台、文章、媒体、Gallery 和游客评论审核。
+这是原 Vite 个人站的并行迁移版，旧站已从仓库删除；新站提供 Payload 管理后台、文章、媒体、Gallery 和评论区。部署详情见./deploy/README.md.
 
 ## 本地开发
 
@@ -17,7 +17,7 @@ pnpm dev
 - 网站：http://localhost:3000
 - 后台：http://localhost:3000/admin
 
-首次进入后台时创建第一个管理员。不要开放公开管理员注册。
+首次进入后台时创建第一个管理员。
 
 也可以在安装 Docker 后运行：
 
@@ -40,7 +40,6 @@ pnpm import:legacy
 - `users`：Payload 管理员登录。
 - `posts`：Markdown 正文、草稿、发布状态与版本。
 - `media`：在同一个后台页面管理图片文件、标题、Safe/NSFW/Gore 分类、排序、发布状态，以及自动生成的 `thumb`、`display` 尺寸。
-- `gallery-items`：仅为兼容迁移前本地数据而保留并隐藏，不再由前台或后台使用。
 - `comments`：游客评论，默认 `pending`，管理员批准后才公开。
 
 ## 评论防滥用
@@ -52,8 +51,6 @@ NEXT_PUBLIC_TURNSTILE_SITE_KEY=
 TURNSTILE_SECRET_KEY=
 COMMENT_HASH_SECRET=
 ```
-
-多实例生产部署应把内存限流替换成 Redis 或网关限流。
 
 ## 页面缓存与 SEO
 
@@ -68,5 +65,3 @@ NEXT_PUBLIC_SITE_URL=https://example.com
 ## 数据与部署
 
 开发环境使用被 Git 忽略的 SQLite 文件 `payload.db`，上传文件位于被忽略的 `media/`。`DATABASE_URL` 和 `MEDIA_DIR` 可以在生产环境指向代码目录之外的持久路径。
-
-`amao.hnbai.com` 采用日本 VPS、Nginx、systemd、本地 SQLite 和本地媒体目录的部署步骤见 [deploy/README.md](deploy/README.md)。生产环境不要提交 `.env`、数据库文件或媒体文件。数据库结构变化后需要生成并执行 Payload migrations。
