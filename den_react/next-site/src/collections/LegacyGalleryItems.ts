@@ -1,19 +1,16 @@
 import type { CollectionConfig } from 'payload'
 
-import { isAdmin } from '../access/isAdmin'
+const denyAccess = () => false
 
-export const GalleryItems: CollectionConfig = {
+// Keep the migrated table in the schema until a database migration removes it.
+export const LegacyGalleryItems: CollectionConfig = {
   slug: 'gallery-items',
-  admin: {
-    hidden: true,
-    defaultColumns: ['title', 'category', 'sortOrder', 'published'],
-    useAsTitle: 'title',
-  },
+  admin: { hidden: true },
   access: {
-    create: isAdmin,
-    delete: isAdmin,
-    read: ({ req: { user } }) => (user ? true : { published: { equals: true } }),
-    update: isAdmin,
+    create: denyAccess,
+    delete: denyAccess,
+    read: denyAccess,
+    update: denyAccess,
   },
   fields: [
     { name: 'title', type: 'text', required: true },

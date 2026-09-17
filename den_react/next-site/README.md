@@ -1,6 +1,6 @@
 # Amao's Den — Next.js + Payload
 
-这是原 Vite 个人站的并行迁移版，旧站已从仓库删除；新站提供 Payload 管理后台、文章、媒体、Gallery 和评论区。部署详情见./deploy/README.md.
+这是原 Vite 个人站的并行迁移版，旧站已从仓库删除；新站提供 Payload 管理后台、文章、媒体、Gallery 和评论区。部署详情见 [deploy/README.md](./deploy/README.md)。
 
 ## 本地开发
 
@@ -24,16 +24,6 @@ pnpm dev
 ```powershell
 docker compose up
 ```
-
-## 导入旧站内容
-
-导入脚本读取仓库根目录的 `src/blogs` 和 `public/img/gallery`：
-
-```powershell
-pnpm import:legacy
-```
-
-脚本按文章 slug、Gallery 标题与分类去重，可以安全重复执行。`published: false` 的旧文章会作为草稿导入。
 
 ## 内容模型
 
