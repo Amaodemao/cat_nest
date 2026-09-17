@@ -1,0 +1,47 @@
+---
+const { title = 'Haonan Bai' } = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{title}</title>
+    <link rel="icon" href="/favicon.ico" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="site-title" href="mailto:baihn2002@outlook.com">Haonan Bai (白浩男)</a>
+        <nav aria-label="Main navigation">
+          <a href="/">About</a>
+          <a href="/resume.pdf">Download CV</a>
+        </nav>
+      </div>
+    </header>
+    <main><slot /></main>
+    <footer class="site-footer">
+      <span>2026 © BAI Haonan. Design courtesy: <a href="https://homes.cs.washington.edu/~yuliats/">Yulia Tsvetkov</a></span>
+      <a href="/guigui/">In memory of my beloved cat, Gui Gui</a>
+    </footer>
+  </body>
+</html>
+<style is:global>
+  @import url('https://fonts.googleapis.com/css?family=Lato:300,400,400italic|Droid+Sans+Mono');
+  :root { font-family: Lato, sans-serif; color: #444; background: #f3f3f3; line-height: 1.7; }
+  * { box-sizing: border-box; }
+  body { margin: 0; }
+  a { color: #35606b; }
+  .site-header, main > section, .site-footer { width: min(920px, calc(100% - 2rem)); margin: 1.25rem auto; background: white; padding: 1.5rem; }
+  .header-inner { display: flex; gap: 1rem; justify-content: space-between; align-items: center; }
+  .site-title { color: inherit; font-size: 1.5rem; text-decoration: none; font-weight: 400; }
+  nav { display: flex; flex-wrap: wrap; gap: 1rem; } nav a { text-decoration: none; }
+  h1, h2, h3 { font-weight: 300; line-height: 1.25; } h1 { margin-top: 0; }
+  .profile { display: grid; grid-template-columns: minmax(180px, 1fr) 2fr; gap: 2rem; align-items: center; }
+  .profile img { width: 100%; border-radius: 20px; display: block; }
+  .links { text-align: center; line-height: 2; }
+  li { margin: .4rem 0; } .entry-meta { color: #666; }
+  .oral { color: red; }
+  .site-footer { display: flex; justify-content: space-between; gap: 1rem; font-size: .8rem; color: #777; }
+  @media (max-width: 650px) { .header-inner, .site-footer { align-items: flex-start; flex-direction: column; } .profile { grid-template-columns: 1fr; } .profile img { max-width: 240px; margin: auto; } }
+</style>
