@@ -9,7 +9,7 @@ import sharp from 'sharp'
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Posts } from './collections/Posts'
-import { GalleryItems } from './collections/GalleryItems'
+import { LegacyGalleryItems } from './collections/LegacyGalleryItems'
 import { Comments } from './collections/Comments'
 import { getSiteURL } from './lib/siteURL'
 
@@ -41,7 +41,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Posts, Media, GalleryItems, Comments],
+  collections: [Users, Posts, Media, LegacyGalleryItems, Comments],
   cors: [siteOrigin],
   csrf: [siteOrigin],
   editor: lexicalEditor(),
@@ -57,5 +57,4 @@ export default buildConfig({
     },
   }),
   sharp,
-  plugins: [],
 })

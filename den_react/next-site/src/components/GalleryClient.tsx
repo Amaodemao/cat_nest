@@ -12,6 +12,8 @@ export type GalleryViewItem = {
   originalUrl: string
 }
 
+type GalleryCategory = GalleryViewItem['category']
+
 type LightboxState = {
   open: boolean
   src: string
@@ -31,12 +33,10 @@ export function GalleryClient({ items }: { items: GalleryViewItem[] }) {
     fallbackSrc: '',
     caption: '',
   })
-  const [showNsfw, setShowNsfw] = useState(false)
-  const [showGore, setShowGore] = useState(false)
+  const [category, setCategory] = useState<GalleryCategory>('safe')
   const [transitionPhase, setTransitionPhase] = useState<'idle' | 'out' | 'in'>('idle')
   const transitionTimers = useRef<number[]>([])
-  const mode = showNsfw ? (showGore ? 'gore' : 'nsfw') : 'safe'
-  const visible = items.filter((item) => item.category === mode)
+  const visible = items.filter((item) => item.category === category)
 
   useEffect(() => {
     if (!lightbox.open) return
@@ -55,15 +55,14 @@ export function GalleryClient({ items }: { items: GalleryViewItem[] }) {
     return () => transitionTimers.current.forEach((timer) => window.clearTimeout(timer))
   }, [])
 
-  function startTransition(nextNsfw: boolean, nextGore: boolean) {
+  function startTransition(nextCategory: GalleryCategory) {
     if (transitionPhase !== 'idle') return
     transitionTimers.current.forEach((timer) => window.clearTimeout(timer))
     transitionTimers.current = []
     setTransitionPhase('out')
     transitionTimers.current.push(
       window.setTimeout(() => {
-        setShowNsfw(nextNsfw)
-        setShowGore(nextNsfw ? nextGore : false)
+        setCategory(nextCategory)
         setTransitionPhase('in')
       }, 450),
       window.setTimeout(() => setTransitionPhase('idle'), 900),
@@ -85,20 +84,20 @@ export function GalleryClient({ items }: { items: GalleryViewItem[] }) {
         <h2 id="gallery-title">Gallery</h2>
         <div className="gallery-controls">
           <button
-            aria-pressed={showNsfw}
-            className={`toggle-btn ${showNsfw ? 'is-active' : ''}`}
+            aria-pressed={category !== 'safe'}
+            className={`toggle-btn ${category !== 'safe' ? 'is-active' : ''}`}
             disabled={transitionPhase !== 'idle'}
-            onClick={() => startTransition(!showNsfw, showGore)}
+            onClick={() => startTransition(category === 'safe' ? 'nsfw' : 'safe')}
             type="button"
           >
             NSFW
           </button>
-          {showNsfw && (
+          {category !== 'safe' && (
             <button
-              aria-pressed={showGore}
-              className={`toggle-btn ${showGore ? 'is-active' : ''}`}
+              aria-pressed={category === 'gore'}
+              className={`toggle-btn ${category === 'gore' ? 'is-active' : ''}`}
               disabled={transitionPhase !== 'idle'}
-              onClick={() => startTransition(showNsfw, !showGore)}
+              onClick={() => startTransition(category === 'gore' ? 'nsfw' : 'gore')}
               type="button"
             >
               Gore
@@ -108,7 +107,7 @@ export function GalleryClient({ items }: { items: GalleryViewItem[] }) {
       </div>
       <div
         className={`gallery grid ${transitionPhase !== 'idle' ? 'is-transitioning' : ''} is-${transitionPhase}`}
-        key={mode}
+        key={category}
       >
         {visible.map((item) => (
           <figure

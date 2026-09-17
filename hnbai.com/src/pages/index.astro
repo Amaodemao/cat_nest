@@ -1,0 +1,53 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout title="Haonan Bai | About">
+  <section class="profile">
+    <div><img src="/img/Picture.jpg" alt="Haonan Bai" /><p class="links"><a href="https://scholar.google.com/citations?user=K2Z8ui0AAAAJ&hl=en">Google Scholar</a><br /><a href="https://orcid.org/0009-0008-6061-107X">ORCID</a> · <a href="https://github.com/amaodemao">GitHub</a></p></div>
+    <div>
+      <p>
+        Hi! I am a first-year Master of Applied Science student in 
+          <a href="https://ece.ubc.ca/">Electrical and Computer Engineering</a>
+        at the University of British Columbia. 
+        Previously, I earned my Bachelor of Engineering degree in Artificial Intelligence from the 
+        <a href="https://www.cse.cuhk.edu.hk/">Department of Computer Science and Engineering</a> 
+        at the Chinese University of Hong Kong.
+      </p>
+      <p>
+        My research lies at the intersection of 
+        <strong>Artificial Intelligence</strong>, 
+        <strong>Software Engineering</strong>, and 
+        <strong>Security</strong>. 
+        I am interested in building robust, safe and fair AI systems.
+      </p>
+      <p>
+        I am currently working with Prof. Julia Rubin and Prof. Simon Oya. Previously, I had the privilege of working with 
+        Prof. Michael R. Lyu and Prof. Wenxuan Wang at CUHK, as well as Prof. Xin Eric Wang at the UC Santa Barbara.
+      </p>
+    </div>
+  </section>
+  <section>
+    <h2 id="publications">Publications</h2>
+    <ul>
+      <li>
+        <strong>New Job, New Gender? Measuring the Social Bias in Image Generation Models</strong>
+        <div class="publication-details">
+          <p>Wenxuan Wang, <b>Haonan Bai</b>, Jen-tse Huang, Yuxuan Wan, Youliang Yuan, Haoyi Qiu, Nanyun Peng, Michael R. Lyu</p>
+          <p><b class="oral">[Oral presentation; 174/4,385 submissions, top 3.97%]</b> ACM Multimedia, 2024</p>
+        </div>
+      </li>
+      <li>
+        <strong>BiasAsker: Measuring the Bias in Conversational AI System</strong>
+        <div class="publication-details">
+          <p>Yuxuan Wan, Wenxuan Wang, Pinjia He, Jiazhen Gu, <b>Haonan Bai</b>, Michael Lyu</p>
+          <p>ESEC/FSE, 2023</p>
+        </div>
+      </li>
+    </ul>
+  </section>
+</BaseLayout>
+
+<style>
+  .publication-details { padding-inline-start: 40px; }
+  .publication-details p { margin: 0; }
+</style>
